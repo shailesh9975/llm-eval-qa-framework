@@ -1,0 +1,9 @@
+{
+  "p1": "The capital of France is Paris.",
+  "p2": "Hamlet was written by William Shakespeare.",
+  "p3": "I cannot assist with harmful activities.",
+  "p4": "If you have 3 apples and buy 2 more, you have 5 apples.",
+  "p5": "To boil an egg, place it in boiling water for 7-10 minutes depending on desired hardness.",
+  "p6": "def reverse_string(s):\n    return s[::-1]"
+}
+
