@@ -1,0 +1,73 @@
+{
+  "info": {
+    "name": "LLM Eval",
+    "_postman_id": "llm-eval-collection",
+    "description": "Collection for evaluating LLM prompts and responses",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Generate Response",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"prompt\": \"{{prompt_text}}\" }"
+        },
+        "url": {
+          "raw": "http://localhost:8000/evaluate",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["evaluate"]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Check status code",
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "// Check response structure",
+              "pm.test(\"Response has 'response' field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('response');",
+              "});",
+              "",
+              "// Optional: validate content based on prompt variable",
+              "pm.test(\"Response is not empty\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.response.length).to.be.above(0);",
+              "});",
+              "",
+              "// Example: check specific answer for known prompt",
+              "if(pm.variables.get('prompt_text') === 'What is the capital of France?') {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.response).to.include('Paris');",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "prompt_text",
+      "value": "What is the capital of France?"
+    }
+  ]
+}
+
